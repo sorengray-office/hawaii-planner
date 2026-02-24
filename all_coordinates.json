@@ -1,0 +1,162 @@
+{
+  "HOME": {
+    "lat": 21.648161,
+    "lng": -157.91806,
+    "source": "geocoded"
+  },
+  "Temple Beach": {
+    "lat": 21.649565,
+    "lng": -157.923083,
+    "source": "geocoded"
+  },
+  "Bikini Beach": {
+    "lat": 21.6445,
+    "lng": -157.9245,
+    "source": "manual - near Laie Beach Park"
+  },
+  "Malaekahana Beach": {
+    "lat": 21.657535,
+    "lng": -157.929642,
+    "source": "geocoded"
+  },
+  "Puaena Point": {
+    "lat": 21.5925,
+    "lng": -158.1045,
+    "source": "manual - Haleiwa Beach Park area"
+  },
+  "Turtle Bay": {
+    "lat": 21.7133,
+    "lng": -158.0472,
+    "source": "manual - Turtle Bay Resort beach"
+  },
+  "Keikis": {
+    "lat": 21.6472,
+    "lng": -158.0514,
+    "source": "manual - between Sunset and Pipeline"
+  },
+  "Rock Piles": {
+    "lat": 21.6506,
+    "lng": -158.0525,
+    "source": "manual - North Shore surf spot"
+  },
+  "Kawela Bay": {
+    "lat": 21.7028,
+    "lng": -158.0036,
+    "source": "manual - near Turtle Bay"
+  },
+  "Pounders": {
+    "lat": 21.63207,
+    "lng": -157.920581,
+    "source": "geocoded"
+  },
+  "Cholos": {
+    "lat": 21.5947,
+    "lng": -158.1025,
+    "source": "manual - Haleiwa town"
+  },
+  "Banzai Sushi": {
+    "lat": 21.586685,
+    "lng": -158.102781,
+    "source": "geocoded"
+  },
+  "Surf and Salsa": {
+    "lat": 21.6333,
+    "lng": -158.0467,
+    "source": "manual - Sunset Beach area"
+  },
+  "Ken's Fish": {
+    "lat": 21.6725,
+    "lng": -157.9539,
+    "source": "manual - Kahuku area"
+  },
+  "Roy's Poke": {
+    "lat": 21.6508,
+    "lng": -157.9378,
+    "source": "manual - North Shore"
+  },
+  "Sunset Pillbox": {
+    "lat": 21.6764,
+    "lng": -158.0378,
+    "source": "manual - Ehukai Pillbox Trail"
+  },
+  "Waimea Lookout": {
+    "lat": 21.6422,
+    "lng": -158.0533,
+    "source": "manual - Waimea Valley"
+  },
+  "Crouching Lion": {
+    "lat": 21.5489,
+    "lng": -157.8614,
+    "source": "manual - Kaaawa lookout"
+  },
+  "Sacred Falls": {
+    "lat": 21.6117,
+    "lng": -157.9094,
+    "source": "manual - Hauula (closed trail)"
+  },
+  "Notches": {
+    "lat": 21.3658,
+    "lng": -157.7589,
+    "source": "manual - Pali Notches"
+  },
+  "Maunawili Waterfall": {
+    "lat": 21.3689,
+    "lng": -157.7883,
+    "source": "manual - Maunawili Falls"
+  },
+  "Sharks Cove": {
+    "lat": 21.6464,
+    "lng": -158.0636,
+    "source": "manual - Pupukea"
+  },
+  "Left side of Waimea Rock": {
+    "lat": 21.6425,
+    "lng": -158.0639,
+    "source": "manual - Waimea Bay"
+  },
+  "Rock Piles Snorkeling": {
+    "lat": 21.6506,
+    "lng": -158.0525,
+    "source": "manual - same as Rock Piles beach"
+  },
+  "Electric Beach": {
+    "lat": 21.3536,
+    "lng": -158.1222,
+    "source": "manual - Kahe Point"
+  },
+  "Pipeline": {
+    "lat": 21.670285,
+    "lng": -158.046982,
+    "source": "geocoded"
+  },
+  "Makapuu Beach": {
+    "lat": 21.3089,
+    "lng": -157.6531,
+    "source": "manual - Makapuu Beach Park"
+  },
+  "Makapuu Tide Pools": {
+    "lat": 21.3119,
+    "lng": -157.6489,
+    "source": "manual - near lighthouse"
+  },
+  "Cockroach Beach": {
+    "lat": 21.3342,
+    "lng": -157.6719,
+    "source": "manual - Kaupo Beach Park area"
+  },
+  "Mokulua Islands": {
+    "lat": 21.3906,
+    "lng": -157.6944,
+    "source": "manual - twin islands off Lanikai"
+  },
+  "Tantalus Overlook": {
+    "lat": 21.313424,
+    "lng": -157.822865,
+    "source": "geocoded"
+  },
+  "Makua Beach": {
+    "lat": 21.5567,
+    "lng": -158.2222,
+    "source": "manual - Makua Valley area, West Side"
+  }
+}

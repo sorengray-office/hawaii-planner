@@ -474,21 +474,21 @@
         // Activity data with GPS coordinates
         const activities = [
             // Beaches (Walking Distance from Laie)
-            { id: 1, name: 'Temple Beach', location: 'Laie', lat: 21.6444, lng: -157.9258, category: 'beaches-walking', description: 'Beautiful beach walking distance from Laie, perfect for sunset walks.' },
-            { id: 2, name: 'Bikini Beach', location: 'Laie', lat: 21.6467, lng: -157.9267, category: 'beaches-walking', description: 'Local favorite beach spot right in Laie.' },
-            { id: 3, name: 'Malaekahana Beach', location: 'Laie', lat: 21.6583, lng: -157.9456, category: 'beaches-walking', description: 'Long stretch of sandy beach, great for swimming and relaxing.' },
-            { id: 4, name: 'Puaena Point', location: 'Haleiwa', lat: 21.5928, lng: -158.1042, category: 'beaches-walking', description: 'Scenic point with great views and good swimming conditions.' },
-            { id: 5, name: 'Turtle Bay', location: 'Kahuku', lat: 21.7133, lng: -157.9972, category: 'beaches-walking', description: 'Protected bay with calm waters when swell is small, often see turtles.' },
+            { id: 1, name: 'Temple Beach', location: 'Laie', lat: 21.649565, lng: -157.923083, category: 'beaches-walking', description: 'Beautiful beach walking distance from Laie, perfect for sunset walks.' },
+            { id: 2, name: 'Bikini Beach', location: 'Laie', lat: 21.6445, lng: -157.9245, category: 'beaches-walking', description: 'Local favorite beach spot right in Laie.' },
+            { id: 3, name: 'Malaekahana Beach', location: 'Laie', lat: 21.657535, lng: -157.929642, category: 'beaches-walking', description: 'Long stretch of sandy beach, great for swimming and relaxing.' },
+            { id: 4, name: 'Puaena Point', location: 'Haleiwa', lat: 21.5925, lng: -158.1045, category: 'beaches-walking', description: 'Scenic point with great views and good swimming conditions.' },
+            { id: 5, name: 'Turtle Bay', location: 'Kahuku', lat: 21.7133, lng: -158.0472, category: 'beaches-walking', description: 'Protected bay with calm waters when swell is small, often see turtles.' },
             
             // Good Beaches
             { id: 6, name: 'Keikis', location: 'North Shore', lat: 21.6472, lng: -158.0514, category: 'beaches-good', description: 'Fun shore break and great for finding shells.' },
             { id: 7, name: 'Rock Piles', location: 'North Shore', lat: 21.6506, lng: -158.0525, category: 'beaches-good', description: 'Usually not crowded, excellent shelling beach.' },
             { id: 8, name: 'Kawela Bay', location: 'North Shore', lat: 21.7028, lng: -158.0036, category: 'beaches-good', description: 'Shaded areas, calm waters, and frequent turtle sightings.' },
-            { id: 9, name: 'Pounders', location: 'Laie', lat: 21.6319, lng: -157.9214, category: 'beaches-good', description: '5 minutes away from Laie, great bodyboarding beach.' },
+            { id: 9, name: 'Pounders', location: 'Laie', lat: 21.63207, lng: -157.920581, category: 'beaches-good', description: '5 minutes away from Laie, great bodyboarding beach.' },
             
             // Food
-            { id: 10, name: 'Cholos', location: 'North Shore', lat: 21.5947, lng: -158.0967, category: 'food', description: 'Authentic Mexican food, local favorite.' },
-            { id: 11, name: 'Banzai Sushi', location: 'North Shore', lat: 21.6336, lng: -158.0469, category: 'food', description: 'Fresh sushi on the North Shore.' },
+            { id: 10, name: 'Cholos', location: 'North Shore', lat: 21.5947, lng: -158.1025, category: 'food', description: 'Authentic Mexican food, local favorite.' },
+            { id: 11, name: 'Banzai Sushi', location: 'North Shore', lat: 21.586685, lng: -158.102781, category: 'food', description: 'Fresh sushi on the North Shore.' },
             { id: 12, name: 'Surf and Salsa', location: 'North Shore', lat: 21.6333, lng: -158.0467, category: 'food', description: 'Casual dining with island flavors.' },
             { id: 13, name: "Ken's Fish", location: 'North Shore', lat: 21.6725, lng: -157.9539, category: 'food', description: 'Fresh local fish, simple and delicious.' },
             { id: 14, name: "Roy's Poke", location: 'North Shore', lat: 21.6508, lng: -157.9378, category: 'food', description: 'Some of the best poke on the North Shore.' },
@@ -508,12 +508,12 @@
             { id: 24, name: 'Electric Beach', location: 'West Side (Kahe Point)', lat: 21.3536, lng: -158.1222, category: 'snorkeling', description: 'Warm water outflow attracts tons of marine life.' },
             
             // Other Activities
-            { id: 25, name: 'Pipeline', location: 'North Shore', lat: 21.6644, lng: -158.0539, category: 'other', description: 'World-famous surf spot — watch the pros ride massive waves.' },
+            { id: 25, name: 'Pipeline', location: 'North Shore', lat: 21.670285, lng: -158.046982, category: 'other', description: 'World-famous surf spot — watch the pros ride massive waves.' },
             { id: 26, name: 'Makapuu Beach', location: 'East Side', lat: 21.3089, lng: -157.6531, category: 'other', description: 'Beautiful beach with bodyboarding and stunning cliffs.' },
             { id: 27, name: 'Makapuu Tide Pools', location: 'Along Lighthouse Trail', lat: 21.3119, lng: -157.6489, category: 'other', description: 'Natural tide pools to explore along the lighthouse hike.' },
             { id: 28, name: 'Cockroach Beach', location: 'East Side', lat: 21.3342, lng: -157.6719, category: 'other', description: 'Secluded beach with unique rock formations.' },
             { id: 29, name: 'Kayak to Mokulua Islands', location: 'Kailua/Lanikai', lat: 21.3906, lng: -157.6944, category: 'other', description: 'Paddle out to the twin islands for incredible views and snorkeling.' },
-            { id: 30, name: 'Tantalus Overlook', location: 'Honolulu', lat: 21.3261, lng: -157.8236, category: 'other', description: 'Panoramic views of Honolulu and Diamond Head.' },
+            { id: 30, name: 'Tantalus Overlook', location: 'Honolulu', lat: 21.313424, lng: -157.822865, category: 'other', description: 'Panoramic views of Honolulu and Diamond Head.' },
             { id: 31, name: 'Makua Beach', location: 'West Side', lat: 21.5567, lng: -158.2222, category: 'other', description: 'Remote, beautiful beach on the western coast.' }
         ];
         
@@ -528,7 +528,7 @@
         };
         
         // Home marker
-        const HOME = { lat: 21.6439, lng: -157.9236, label: '55-131 Naupaka St, Laie' };
+        const HOME = { lat: 21.648161, lng: -157.91806, label: '55-131 Naupaka St, Laie' };
         
         // Initialize map
         const map = L.map('map').setView([21.6, -157.95], 10);

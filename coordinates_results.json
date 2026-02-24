@@ -1,0 +1,119 @@
+{
+  "HOME": {
+    "query": "55-131 Naupaka Street, Laie, HI 96762",
+    "lat": 21.648161,
+    "lng": -157.91806,
+    "address": "Naupaka Street, Laie, Honolulu County, Hawaii, 96762, United States"
+  },
+  "Temple Beach": {
+    "query": "Temple Beach, Laie, Hawaii",
+    "lat": 21.649565,
+    "lng": -157.923083,
+    "address": "Temple Beach, Laie, Honolulu County, Hawaii, United States"
+  },
+  "Bikini Beach": {
+    "error": "Not found"
+  },
+  "Malaekahana Beach": {
+    "query": "Malaekahana State Recreation Area, Laie, Hawaii",
+    "lat": 21.657535,
+    "lng": -157.929642,
+    "address": "M\u0101laekahana State Recreation Area, Laie, Honolulu County, Hawaii, United States"
+  },
+  "Puaena Point": {
+    "error": "Not found"
+  },
+  "Turtle Bay": {
+    "error": "Not found"
+  },
+  "Keikis": {
+    "error": "Not found"
+  },
+  "Rock Piles": {
+    "error": "Not found"
+  },
+  "Kawela Bay": {
+    "error": "Not found"
+  },
+  "Pounders": {
+    "query": "Pounders Beach, Laie, Hawaii",
+    "lat": 21.63207,
+    "lng": -157.920581,
+    "address": "Pounders Beach, Laie, Honolulu County, Hawaii, United States"
+  },
+  "Cholos": {
+    "error": "Not found"
+  },
+  "Banzai Sushi": {
+    "query": "Banzai Sushi Bar, Haleiwa, Hawaii",
+    "lat": 21.586685,
+    "lng": -158.102781,
+    "address": "Banzai Sushi Bar, 66-246, Kamehameha Highway, Haleiwa, Hale\u02bbiwa, Honolulu County, Hawaii, 96712, United States"
+  },
+  "Surf and Salsa": {
+    "error": "Not found"
+  },
+  "Ken's Fish": {
+    "error": "Not found"
+  },
+  "Roy's Poke": {
+    "error": "Not found"
+  },
+  "Sunset Pillbox": {
+    "error": "Not found"
+  },
+  "Waimea Lookout": {
+    "error": "Not found"
+  },
+  "Crouching Lion": {
+    "error": "Not found"
+  },
+  "Sacred Falls": {
+    "error": "Not found"
+  },
+  "Notches": {
+    "error": "Not found"
+  },
+  "Maunawili Waterfall": {
+    "error": "Not found"
+  },
+  "Sharks Cove": {
+    "error": "Not found"
+  },
+  "Left side of Waimea Rock": {
+    "error": "Not found"
+  },
+  "Rock Piles Snorkeling": {
+    "error": "Not found"
+  },
+  "Electric Beach": {
+    "error": "Not found"
+  },
+  "Pipeline": {
+    "query": "Banzai Pipeline, Pupukea, Hawaii",
+    "lat": 21.670285,
+    "lng": -158.046982,
+    "address": "Banzai Pipeline, Ke Nui Road, Sunset Beach, Waiale\u2018e, Honolulu County, Hawaii, United States"
+  },
+  "Makapuu Beach": {
+    "error": "Not found"
+  },
+  "Makapuu Tide Pools": {
+    "error": "Not found"
+  },
+  "Cockroach Beach": {
+    "error": "Not found"
+  },
+  "Mokulua Islands": {
+    "error": "Not found"
+  },
+  "Tantalus Overlook": {
+    "query": "Tantalus Lookout, Honolulu, Hawaii",
+    "lat": 21.313424,
+    "lng": -157.822865,
+    "address": "Tantalus Lookout, Nutridge Street, M\u0101noa, East Honolulu, Honolulu, Honolulu County, Hawaii, 96822, United States"
+  },
+  "Makua Beach": {
+    "error": "Not found"
+  }
+}

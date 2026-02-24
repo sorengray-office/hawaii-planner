@@ -1,0 +1,66 @@
+Searching: HOME
+  Found: 21.6481609, -157.91806
+Searching: Temple Beach
+  Found: 21.649565, -157.9230831
+Searching: Bikini Beach
+  Not found
+Searching: Malaekahana Beach
+  Found: 21.657535, -157.9296424
+Searching: Puaena Point
+  Not found
+Searching: Turtle Bay
+  Not found
+Searching: Keikis
+  Not found
+Searching: Rock Piles
+  Not found
+Searching: Kawela Bay
+  Not found
+Searching: Pounders
+  Found: 21.6320695, -157.9205814
+Searching: Cholos
+  Not found
+Searching: Banzai Sushi
+  Found: 21.5866848, -158.102781
+Searching: Surf and Salsa
+  Not found
+Searching: Ken's Fish
+  Not found
+Searching: Roy's Poke
+  Not found
+Searching: Sunset Pillbox
+  Not found
+Searching: Waimea Lookout
+  Not found
+Searching: Crouching Lion
+  Not found
+Searching: Sacred Falls
+  Not found
+Searching: Notches
+  Not found
+Searching: Maunawili Waterfall
+  Not found
+Searching: Sharks Cove
+  Not found
+Searching: Left side of Waimea Rock
+  Not found
+Searching: Rock Piles Snorkeling
+  Not found
+Searching: Electric Beach
+  Not found
+Searching: Pipeline
+  Found: 21.6702849, -158.0469817
+Searching: Makapuu Beach
+  Not found
+Searching: Makapuu Tide Pools
+  Not found
+Searching: Cockroach Beach
+  Not found
+Searching: Mokulua Islands
+  Not found
+Searching: Tantalus Overlook
+  Found: 21.3134237, -157.8228652
+Searching: Makua Beach
+  Not found
+
+Found 7/32 coordinates
