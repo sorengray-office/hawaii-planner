@@ -328,6 +328,29 @@
             margin-bottom: var(--space-md);
         }
         
+        .notes-toggle {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--dusk-gray);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color var(--duration);
+        }
+        .notes-toggle:hover { color: var(--deep-tide); }
+        .notes-toggle .arrow { transition: transform var(--duration); display: inline-block; font-size: 0.65rem; }
+        .notes-toggle.open .arrow { transform: rotate(90deg); }
+        
+        .notes-wrapper {
+            display: none;
+            margin-top: var(--space-sm);
+        }
+        .notes-wrapper.open { display: block; }
+        
         .notes-field {
             width: 100%;
             font-family: var(--font-body);
@@ -613,6 +636,7 @@
                         card.classList.add('done');
                     }
                     
+                    const hasNotes = activityData.notes && activityData.notes.trim().length > 0;
                     card.innerHTML = `
                         <div class="activity-header">
                             <div class="checkbox-wrapper">
@@ -626,9 +650,14 @@
                             </div>
                         </div>
                         <div class="activity-description">${activity.description}</div>
-                        <textarea class="notes-field" 
-                                  data-id="${activity.id}" 
-                                  placeholder="Add your notes here...">${activityData.notes}</textarea>
+                        <button class="notes-toggle ${hasNotes ? 'open' : ''}" data-id="${activity.id}">
+                            <span class="arrow">▶</span> Notes${hasNotes ? '' : ''}
+                        </button>
+                        <div class="notes-wrapper ${hasNotes ? 'open' : ''}" data-id="${activity.id}">
+                            <textarea class="notes-field" 
+                                      data-id="${activity.id}" 
+                                      placeholder="Add your notes here...">${activityData.notes}</textarea>
+                        </div>
                     `;
                     
                     grid.appendChild(card);
@@ -641,6 +670,19 @@
         
         // Attach event listeners
         function attachEventListeners() {
+            // Notes toggle listeners
+            document.querySelectorAll('.notes-toggle').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.dataset.id;
+                    btn.classList.toggle('open');
+                    const wrapper = btn.nextElementSibling;
+                    wrapper.classList.toggle('open');
+                    if (wrapper.classList.contains('open')) {
+                        wrapper.querySelector('textarea').focus();
+                    }
+                });
+            });
+            
             // Checkbox listeners
             document.querySelectorAll('.activity-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', (e) => {
