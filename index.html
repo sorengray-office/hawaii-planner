@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laie Oahu Trip Planner — One Month in Paradise</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        :root {
+            /* Colors */
+            --driftwood-cream: #F5F0E8;
+            --deep-tide: #2C3E50;
+            --salt-wash: #E8E0D0;
+            --shoreline-teal: #5B9A8B;
+            --sunset-coral: #D4856A;
+            --foam-white: #FDFBF7;
+            --wet-sand: #C4B9A4;
+            --dusk-gray: #7A7467;
+            --ink-black: #1A1A18;
+            
+            /* Typography */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-editorial: 'DM Serif Display', Georgia, serif;
+            --font-body: 'Source Sans 3', system-ui, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 2rem;
+            --space-xl: 4rem;
+            
+            /* Borders & Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --border-light: 1px solid var(--wet-sand);
+            
+            /* Shadows */
+            --shadow-soft: 0 2px 12px rgba(26,26,24,0.05);
+            --shadow-card: 0 4px 24px rgba(26,26,24,0.08);
+            
+            /* Transitions */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 0.3s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            font-size: 1.0625rem;
+            line-height: 1.6;
+            color: var(--deep-tide);
+            background-color: var(--driftwood-cream);
+            position: relative;
+        }
+        
+        /* Grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 9999;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--foam-white);
+            padding: var(--space-lg) clamp(1rem, 3vw, 2.5rem);
+            border-bottom: var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        h1 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(1.75rem, 5vw, 3rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--deep-tide);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .subtitle {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.125rem;
+            color: var(--dusk-gray);
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--wet-sand);
+        }
+        
+        .filter-btn {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.625rem 1.25rem;
+            background: transparent;
+            color: var(--deep-tide);
+            border: 1.5px solid var(--wet-sand);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--duration) var(--ease-out);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--shoreline-teal);
+            color: var(--shoreline-teal);
+        }
+        
+        .filter-btn.active {
+            background: var(--shoreline-teal);
+            color: var(--foam-white);
+            border-color: var(--shoreline-teal);
+        }
+        
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2.5rem);
+        }
+        
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-xl);
+        }
+        
+        @media (min-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Map Section */
+        .map-container {
+            position: sticky;
+            top: 180px;
+            height: 600px;
+            background: var(--salt-wash);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+        
+        @media (max-width: 899px) {
+            .map-container {
+                position: relative;
+                top: 0;
+                height: 400px;
+            }
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Activities Section */
+        .activities-section h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            line-height: 1.1;
+            color: var(--deep-tide);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 3px double var(--deep-tide);
+        }
+        
+        .category-section {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .category-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .category-title {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--deep-tide);
+        }
+        
+        .activity-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+        
+        /* Activity Card */
+        .activity-card {
+            background: var(--foam-white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-sm);
+            border: var(--border-light);
+            box-shadow: var(--shadow-soft);
+            transition: all var(--duration) var(--ease-out);
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .activity-card.done {
+            opacity: 0.6;
+        }
+        
+        .activity-card.done .activity-name {
+            text-decoration: line-through;
+            color: var(--dusk-gray);
+        }
+        
+        .activity-header {
+            display: flex;
+            gap: var(--space-md);
+            align-items: flex-start;
+            margin-bottom: var(--space-md);
+        }
+        
+        .checkbox-wrapper {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .activity-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--shoreline-teal);
+        }
+        
+        .activity-info {
+            flex: 1;
+        }
+        
+        .activity-name {
+            font-family: var(--font-editorial);
+            font-size: 1.25rem;
+            color: var(--deep-tide);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .activity-location {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--dusk-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .activity-description {
+            font-size: 0.9375rem;
+            color: var(--dusk-gray);
+            line-height: 1.5;
+            margin-bottom: var(--space-md);
+        }
+        
+        .notes-field {
+            width: 100%;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--deep-tide);
+            background: var(--driftwood-cream);
+            border: 1px solid var(--wet-sand);
+            border-radius: var(--radius-sm);
+            padding: var(--space-sm) var(--space-md);
+            resize: vertical;
+            min-height: 60px;
+            transition: border-color var(--duration);
+        }
+        
+        .notes-field:focus {
+            outline: none;
+            border-color: var(--shoreline-teal);
+        }
+        
+        .notes-field::placeholder {
+            color: var(--wet-sand);
+        }
+        
+        /* Map Popup */
+        .leaflet-popup-content-wrapper {
+            background: var(--foam-white);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .leaflet-popup-content {
+            margin: var(--space-md);
+        }
+        
+        .popup-title {
+            font-family: var(--font-editorial);
+            font-size: 1.125rem;
+            color: var(--deep-tide);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .popup-location {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--dusk-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        /* Category Colors */
+        .beaches-walking { background-color: #5B9A8B; }
+        .beaches-good { background-color: #4A8B7D; }
+        .food { background-color: #D4856A; }
+        .hikes { background-color: #8B7355; }
+        .snorkeling { background-color: #3D6B7E; }
+        .other { background-color: #7A7467; }
+        
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--deep-tide);
+            color: var(--salt-wash);
+            padding: var(--space-xl) clamp(1rem, 3vw, 2.5rem);
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+        
+        footer p {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Laie Oahu Trip Planner</h1>
+        <p class="subtitle">One month in paradise — your complete guide to beaches, food, hikes & more</p>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active" data-category="all">All Activities</button>
+            <button class="filter-btn" data-category="beaches-walking">Walking Beaches</button>
+            <button class="filter-btn" data-category="beaches-good">Good Beaches</button>
+            <button class="filter-btn" data-category="food">Food</button>
+            <button class="filter-btn" data-category="hikes">Hikes</button>
+            <button class="filter-btn" data-category="snorkeling">Snorkeling</button>
+            <button class="filter-btn" data-category="other">Other</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="layout">
+            <!-- Map Section -->
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            
+            <!-- Activities Section -->
+            <div class="activities-section">
+                <h2>Activities & Recommendations</h2>
+                
+                <div id="activities-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Salt water heals everything. 🌊</p>
+    </footer>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Activity data with GPS coordinates
+        const activities = [
+            // Beaches (Walking Distance from Laie)
+            { id: 1, name: 'Temple Beach', location: 'Laie', lat: 21.6444, lng: -157.9258, category: 'beaches-walking', description: 'Beautiful beach walking distance from Laie, perfect for sunset walks.' },
+            { id: 2, name: 'Bikini Beach', location: 'Laie', lat: 21.6467, lng: -157.9267, category: 'beaches-walking', description: 'Local favorite beach spot right in Laie.' },
+            { id: 3, name: 'Malaekahana Beach', location: 'Laie', lat: 21.6583, lng: -157.9456, category: 'beaches-walking', description: 'Long stretch of sandy beach, great for swimming and relaxing.' },
+            { id: 4, name: 'Puaena Point', location: 'Haleiwa', lat: 21.5928, lng: -158.1042, category: 'beaches-walking', description: 'Scenic point with great views and good swimming conditions.' },
+            { id: 5, name: 'Turtle Bay', location: 'Kahuku', lat: 21.7133, lng: -157.9972, category: 'beaches-walking', description: 'Protected bay with calm waters when swell is small, often see turtles.' },
+            
+            // Good Beaches
+            { id: 6, name: 'Keikis', location: 'North Shore', lat: 21.6472, lng: -158.0514, category: 'beaches-good', description: 'Fun shore break and great for finding shells.' },
+            { id: 7, name: 'Rock Piles', location: 'North Shore', lat: 21.6506, lng: -158.0525, category: 'beaches-good', description: 'Usually not crowded, excellent shelling beach.' },
+            { id: 8, name: 'Kawela Bay', location: 'North Shore', lat: 21.7028, lng: -158.0036, category: 'beaches-good', description: 'Shaded areas, calm waters, and frequent turtle sightings.' },
+            { id: 9, name: 'Pounders', location: 'Laie', lat: 21.6319, lng: -157.9214, category: 'beaches-good', description: '5 minutes away from Laie, great bodyboarding beach.' },
+            
+            // Food
+            { id: 10, name: 'Cholos', location: 'North Shore', lat: 21.5947, lng: -158.0967, category: 'food', description: 'Authentic Mexican food, local favorite.' },
+            { id: 11, name: 'Banzai Sushi', location: 'North Shore', lat: 21.6336, lng: -158.0469, category: 'food', description: 'Fresh sushi on the North Shore.' },
+            { id: 12, name: 'Surf and Salsa', location: 'North Shore', lat: 21.6333, lng: -158.0467, category: 'food', description: 'Casual dining with island flavors.' },
+            { id: 13, name: "Ken's Fish", location: 'North Shore', lat: 21.6725, lng: -157.9539, category: 'food', description: 'Fresh local fish, simple and delicious.' },
+            { id: 14, name: "Roy's Poke", location: 'North Shore', lat: 21.6508, lng: -157.9378, category: 'food', description: 'Some of the best poke on the North Shore.' },
+            
+            // Hikes
+            { id: 15, name: 'Sunset Pillbox', location: 'North Shore', lat: 21.6764, lng: -158.0378, category: 'hikes', description: 'Super quick and easy hike with incredible sunset views.' },
+            { id: 16, name: 'Waimea Lookout', location: 'Waimea Valley', lat: 21.6422, lng: -158.0533, category: 'hikes', description: 'Less of a hike, more of a walk through a beautiful botanical garden.' },
+            { id: 17, name: 'Crouching Lion', location: 'Kaaawa', lat: 21.5489, lng: -157.8614, category: 'hikes', description: 'Moderate hike with stunning ocean and mountain views.' },
+            { id: 18, name: 'Sacred Falls', location: 'Hauula', lat: 21.6117, lng: -157.9094, category: 'hikes', description: 'Best waterfall on the island. Go with someone who knows the way!' },
+            { id: 19, name: 'Notches', location: 'East Side', lat: 21.3658, lng: -157.7589, category: 'hikes', description: 'Challenging but rewarding — the best hike on Oahu.' },
+            { id: 20, name: 'Maunawili Waterfall', location: 'Kailua Area', lat: 21.3689, lng: -157.7883, category: 'hikes', description: 'Popular waterfall hike with swimming at the end.' },
+            
+            // Snorkeling
+            { id: 21, name: 'Sharks Cove', location: 'North Shore', lat: 21.6464, lng: -158.0636, category: 'snorkeling', description: 'Incredible snorkeling with the famous blue room cave.' },
+            { id: 22, name: 'Left side of Waimea Rock', location: 'Waimea Bay', lat: 21.6425, lng: -158.0639, category: 'snorkeling', description: 'Protected area with great marine life visibility.' },
+            { id: 23, name: 'Rock Piles (Snorkeling)', location: 'North Shore', lat: 21.6506, lng: -158.0525, category: 'snorkeling', description: 'Great for shelling and spotting turtles underwater.' },
+            { id: 24, name: 'Electric Beach', location: 'West Side (Kahe Point)', lat: 21.3536, lng: -158.1222, category: 'snorkeling', description: 'Warm water outflow attracts tons of marine life.' },
+            
+            // Other Activities
+            { id: 25, name: 'Pipeline', location: 'North Shore', lat: 21.6644, lng: -158.0539, category: 'other', description: 'World-famous surf spot — watch the pros ride massive waves.' },
+            { id: 26, name: 'Makapuu Beach', location: 'East Side', lat: 21.3089, lng: -157.6531, category: 'other', description: 'Beautiful beach with bodyboarding and stunning cliffs.' },
+            { id: 27, name: 'Makapuu Tide Pools', location: 'Along Lighthouse Trail', lat: 21.3119, lng: -157.6489, category: 'other', description: 'Natural tide pools to explore along the lighthouse hike.' },
+            { id: 28, name: 'Cockroach Beach', location: 'East Side', lat: 21.3342, lng: -157.6719, category: 'other', description: 'Secluded beach with unique rock formations.' },
+            { id: 29, name: 'Kayak to Mokulua Islands', location: 'Kailua/Lanikai', lat: 21.3906, lng: -157.6944, category: 'other', description: 'Paddle out to the twin islands for incredible views and snorkeling.' },
+            { id: 30, name: 'Tantalus Overlook', location: 'Honolulu', lat: 21.3261, lng: -157.8236, category: 'other', description: 'Panoramic views of Honolulu and Diamond Head.' },
+            { id: 31, name: 'Makua Beach', location: 'West Side', lat: 21.5567, lng: -158.2222, category: 'other', description: 'Remote, beautiful beach on the western coast.' }
+        ];
+        
+        // Category configurations
+        const categories = {
+            'beaches-walking': { name: 'Beaches (Walking Distance)', color: '#5B9A8B' },
+            'beaches-good': { name: 'Good Beaches', color: '#4A8B7D' },
+            'food': { name: 'Food', color: '#D4856A' },
+            'hikes': { name: 'Hikes', color: '#8B7355' },
+            'snorkeling': { name: 'Snorkeling', color: '#3D6B7E' },
+            'other': { name: 'Other Activities', color: '#7A7467' }
+        };
+        
+        // Initialize map
+        const map = L.map('map').setView([21.6, -157.95], 10);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Store markers
+        const markers = {};
+        
+        // Add markers to map
+        activities.forEach(activity => {
+            const categoryColor = categories[activity.category].color;
+            
+            const icon = L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="background-color: ${categoryColor}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+            
+            const marker = L.marker([activity.lat, activity.lng], { icon })
+                .addTo(map)
+                .bindPopup(`
+                    <div class="popup-title">${activity.name}</div>
+                    <div class="popup-location">${activity.location}</div>
+                `);
+            
+            markers[activity.id] = marker;
+        });
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const saved = localStorage.getItem('hawaiiPlannerData');
+            return saved ? JSON.parse(saved) : {};
+        }
+        
+        // Save data to localStorage
+        function saveData(data) {
+            localStorage.setItem('hawaiiPlannerData', JSON.stringify(data));
+        }
+        
+        let savedData = loadSavedData();
+        
+        // Render activities
+        function renderActivities(filterCategory = 'all') {
+            const container = document.getElementById('activities-container');
+            container.innerHTML = '';
+            
+            // Group activities by category
+            const grouped = {};
+            activities.forEach(activity => {
+                if (!grouped[activity.category]) {
+                    grouped[activity.category] = [];
+                }
+                grouped[activity.category].push(activity);
+            });
+            
+            // Render each category
+            Object.keys(categories).forEach(categoryKey => {
+                if (!grouped[categoryKey]) return;
+                
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+                categorySection.dataset.category = categoryKey;
+                
+                if (filterCategory !== 'all' && filterCategory !== categoryKey) {
+                    categorySection.classList.add('hidden');
+                }
+                
+                categorySection.innerHTML = `
+                    <div class="category-header">
+                        <div class="category-icon ${categoryKey}"></div>
+                        <h3 class="category-title">${categories[categoryKey].name}</h3>
+                    </div>
+                    <div class="activity-grid" id="category-${categoryKey}"></div>
+                `;
+                
+                container.appendChild(categorySection);
+                
+                const grid = document.getElementById(`category-${categoryKey}`);
+                
+                grouped[categoryKey].forEach(activity => {
+                    const activityData = savedData[activity.id] || { done: false, notes: '' };
+                    
+                    const card = document.createElement('div');
+                    card.className = 'activity-card';
+                    card.dataset.id = activity.id;
+                    card.dataset.category = activity.category;
+                    
+                    if (activityData.done) {
+                        card.classList.add('done');
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="activity-header">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" class="activity-checkbox" 
+                                       data-id="${activity.id}" 
+                                       ${activityData.done ? 'checked' : ''}>
+                            </div>
+                            <div class="activity-info">
+                                <div class="activity-name">${activity.name}</div>
+                                <div class="activity-location">${activity.location}</div>
+                            </div>
+                        </div>
+                        <div class="activity-description">${activity.description}</div>
+                        <textarea class="notes-field" 
+                                  data-id="${activity.id}" 
+                                  placeholder="Add your notes here...">${activityData.notes}</textarea>
+                    `;
+                    
+                    grid.appendChild(card);
+                });
+            });
+            
+            // Attach event listeners
+            attachEventListeners();
+        }
+        
+        // Attach event listeners
+        function attachEventListeners() {
+            // Checkbox listeners
+            document.querySelectorAll('.activity-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const card = e.target.closest('.activity-card');
+                    
+                    if (!savedData[id]) savedData[id] = { done: false, notes: '' };
+                    savedData[id].done = e.target.checked;
+                    
+                    if (e.target.checked) {
+                        card.classList.add('done');
+                    } else {
+                        card.classList.remove('done');
+                    }
+                    
+                    saveData(savedData);
+                });
+            });
+            
+            // Notes field listeners
+            document.querySelectorAll('.notes-field').forEach(textarea => {
+                textarea.addEventListener('blur', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    
+                    if (!savedData[id]) savedData[id] = { done: false, notes: '' };
+                    savedData[id].notes = e.target.value;
+                    
+                    saveData(savedData);
+                });
+            });
+        }
+        
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const category = e.target.dataset.category;
+                
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Filter markers on map
+                activities.forEach(activity => {
+                    if (category === 'all' || activity.category === category) {
+                        markers[activity.id].addTo(map);
+                    } else {
+                        markers[activity.id].remove();
+                    }
+                });
+                
+                // Filter activity cards
+                document.querySelectorAll('.category-section').forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        // Initial render
+        renderActivities();
+    </script>
+</body>
+</html>
