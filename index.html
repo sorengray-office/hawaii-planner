@@ -504,6 +504,9 @@
             'other': { name: 'Other Activities', color: '#7A7467' }
         };
         
+        // Home marker
+        const HOME = { lat: 21.6439, lng: -157.9236, label: '55-131 Naupaka St, Laie' };
+        
         // Initialize map
         const map = L.map('map').setView([21.6, -157.95], 10);
         
@@ -511,6 +514,17 @@
             attribution: '© OpenStreetMap contributors',
             maxZoom: 19
         }).addTo(map);
+        
+        // Home marker
+        const homeIcon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="background:#fff;width:28px;height:28px;border-radius:50%;border:3px solid var(--deep-tide,#2C3E50);box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">🏠</div>`,
+            iconSize: [28, 28],
+            iconAnchor: [14, 14]
+        });
+        L.marker([HOME.lat, HOME.lng], { icon: homeIcon })
+            .addTo(map)
+            .bindPopup(`<div class="popup-title">Home</div><div class="popup-location">${HOME.label}</div>`);
         
         // Store markers
         const markers = {};
